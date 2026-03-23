@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const GamePage = () => {
+const GamePage = ({config}) => {
     const [cible, setCible] = useState([0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 50])
     const [point, setPoint] = useState()
     const [tour, setTour] = useState([])
@@ -75,7 +75,7 @@ const GamePage = () => {
                     width: "30vw",
                     alignItems: "center",
                     justifyContent: "center"
-                }}>TITRE</div>
+                }}>{config.typeOfPart}</div>
             <div name="ligne2"
                 style={{ display: "flex" }}>
                 <div name="player1"
@@ -88,7 +88,7 @@ const GamePage = () => {
                         justifyContent: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>Player 1
+                    }}>{config.firstPlayer}
                     <p>{totPlayer1}</p>
                 </div>
 
@@ -102,9 +102,10 @@ const GamePage = () => {
                         justifyContent: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>Player 2
+                    }}>{config.secondPlayer}
                     <p>{totPlayer2}</p>
                 </div>
+                {config.playerQuantity >= 3 && (
                 <div name="player3"
                     style={{
                         border: "solid green 1px",
@@ -115,8 +116,9 @@ const GamePage = () => {
                         justifyContent: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>Player 3
-                    <p>{totPlayer3}</p></div>
+                    }}>{config.thirdPlayer}
+                    <p>{totPlayer3}</p></div>)}
+                {config.playerQuantity >= 4 && (
                 <div name="player4"
                     style={{
                         border: "solid green 1px",
@@ -127,7 +129,8 @@ const GamePage = () => {
                         justifyContent: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>Player 4<p>{totPlayer4}</p></div>
+                    }}>{config.fourthPlayer}
+                    <p>{totPlayer4}</p></div>)}
             </div>
             <div name="ligne3"
                 style={{

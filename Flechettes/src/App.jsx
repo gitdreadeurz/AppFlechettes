@@ -3,9 +3,19 @@ import EndGame from "./pages/EndGame";
 import Config from "./pages/Config";
 import GamePage from "./pages/GamePage";
 
+/**
+ * Composant racine de l'application de fléchettes.
+ * Il agit comme un routeur simple en gérant l'affichage
+ * des différents écrans via un état local.
+ */
 export default function App() {
-  const [screen, setScreen] = useState("end");
+  // État de l'écran courant : "home" | "game" | "end"
+  const [screen, setScreen] = useState("home");
 
+  // Configuration de la partie en cours (définie depuis l'écran Config)
+  const [gameConfig, setGameConfig] = useState(null);
+
+  // --- Données de résultat fictives (à remplacer par les vraies données de jeu) ---
   const result = {
     winner: "Simon",
     startingScore: 501,
@@ -36,16 +46,29 @@ export default function App() {
     ],
   };
 
+  // Relance une partie avec la même configuration (retour à l'écran de jeu)
   const handleReplay = () => {
     console.log("Rejouer avec les mêmes paramètres");
     setScreen("game");
   };
 
+  // Retourne à l'écran d'accueil / configuration pour une nouvelle partie
   const handleNewGame = () => {
     console.log("Retour à la configuration");
     setScreen("home");
   };
 
+  /**
+   * Callback appelé par le composant Config une fois la partie configurée.
+   * Sauvegarde la config et navigue vers l'écran de jeu.
+   * @param {Object} config - Les paramètres choisis par l'utilisateur
+   */
+  const handleGameStart = (config) => {
+    setGameConfig(config);
+    setScreen("game");
+  };
+
+  // Affiche l'écran de fin de partie avec les statistiques
   if (screen === "end") {
     return (
       <EndGame
@@ -56,17 +79,19 @@ export default function App() {
     );
   }
 
+  // Affiche l'écran de jeu avec la configuration sélectionnée
   if (screen === "game") {
     return (
       <div style={placeholderStyles.page}>
-        <GamePage/>
+        <GamePage config={gameConfig} />
       </div>
     );
   }
 
+  // Écran par défaut : configuration / accueil
   return (
     <div style={placeholderStyles.page}>
-      <Config />
+      <Config setGameConfig={handleGameStart} />
     </div>
   );
 }
@@ -82,6 +107,3 @@ const placeholderStyles = {
     fontFamily: "Inter, sans-serif",
   },
 };
-
-
-
