@@ -1,18 +1,33 @@
-import { useEffect, useState } from "react";
-import configWallpaper from "../assets/configWall.jpg";
+import { useState } from "react";
 
-const Config = () => {
-    const [firstPlayer, setFirstPlayer] = useState("Joueur 1");
+
+/**
+ * Composant de configuration de la partie.
+ * Permet de choisir le nombre de joueurs, leurs noms,
+ * le type de partie (301/501/701) et le type de sortie.
+ *
+ * @param {Function} setGameConfig - Callback appelé avec les données du formulaire
+ *                                   pour démarrer la partie dans App.jsx
+ */
+const Config = ({ setGameConfig }) => {
+    // États pour les noms des joueurs (valeurs par défaut pré-remplies)
+    const [firstPlayer, setFirstPlayer]   = useState("Joueur 1");
     const [secondPlayer, setSecondPlayer] = useState("Joueur 2");
-    const [thirdPlayer, setThirdPlayer] = useState("Joueur 3");
+    const [thirdPlayer, setThirdPlayer]   = useState("Joueur 3");
     const [fourthPlayer, setFourthPlayer] = useState("Joueur 4");
+
+    // Nombre de joueurs sélectionné (2 par défaut)
     const [playerCount, setPlayerCount] = useState(2);
+
+    // Type de sortie sélectionné ("simple" ou "double") — état déclaré mais
+    // pourrait être retiré car la valeur est déjà lue via FormData dans handleSubmit
     const [typeOfSort, setTypeOfSort] = useState("");
-    const [gameConfig, setGameConfig] = useState([]);
 
-    
-    
-
+    /**
+     * Vérifie que tous les champs de noms de joueurs actifs sont remplis.
+     * Utilisé pour afficher/masquer le bouton de soumission.
+     * @returns {boolean} true si tous les noms requis sont non vides
+     */
     const PlayersNameTrue = () => {
         if (playerCount >= 1 && firstPlayer.trim() === "") return false;
         if (playerCount >= 2 && secondPlayer.trim() === "") return false;
@@ -21,25 +36,26 @@ const Config = () => {
         return true;
     };
 
+    /**
+     * Gestionnaire de soumission du formulaire.
+     * Récupère toutes les valeurs via FormData et les transmet au composant parent.
+     * @param {React.FormEvent} event - L'événement de soumission du formulaire
+     */
     const handleSubmit = (event) => {
-        event.preventDefault();    
+        event.preventDefault(); // Empêche le rechargement de la page
         const form = event.target;
         const formData = new FormData(form);
+        // Convertit les entrées du formulaire en objet clé/valeur simple
         const formDataObj = Object.fromEntries(formData.entries());
 
+        setGameConfig(formDataObj); // Déclenche la navigation vers l'écran de jeu
+    };
 
-        setGameConfig(formDataObj)  
-    }
-    
-    console.log(gameConfig);
-    
-    
     return (
         <>
-            <div
-                className="config-container"
-            >
-                <form onSubmit={handleSubmit}
+            <div className="config-container">
+                <form
+                    onSubmit={handleSubmit}
                     className="config-form"
                     style={{
                         backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -50,8 +66,12 @@ const Config = () => {
                         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                     }}
                 >
-                    <h2 style={{ marginBottom: "20px", textAlign: "center" }}>Configuration de la partie</h2>
-                    <label htmlFor="playerQuantity" >
+                    <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
+                        Configuration de la partie
+                    </h2>
+
+                    {/* Sélecteur du nombre de joueurs (2 à 4) */}
+                    <label htmlFor="playerQuantity">
                         Nombre de joueurs
                         <select
                             name="playerQuantity"
@@ -65,6 +85,8 @@ const Config = () => {
                         </select>
                     </label>
 
+                    {/* Champs de saisie des noms — les joueurs 3 et 4 s'affichent
+                        conditionnellement selon le nombre de joueurs choisi */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px", margin: "15px 0" }}>
                         <input
                             name="firstPlayer"
@@ -82,6 +104,7 @@ const Config = () => {
                             placeholder="Nom du Joueur 2"
                             style={{ padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                         />
+                        {/* Joueur 3 : visible uniquement si playerCount >= 3 */}
                         {playerCount >= 3 && (
                             <input
                                 name="thirdPlayer"
@@ -92,6 +115,7 @@ const Config = () => {
                                 style={{ padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                             />
                         )}
+                        {/* Joueur 4 : visible uniquement si playerCount >= 4 */}
                         {playerCount >= 4 && (
                             <input
                                 name="fourthPlayer"
@@ -104,26 +128,31 @@ const Config = () => {
                         )}
                     </div>
 
-                    <label htmlFor="" style={{ marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {/* Sélecteur du type de partie : score de départ (301, 501, 701) */}
+                    <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de partie
-                        <select 
-                                name="typeOfPart"
-                                style={{ padding: "8px", borderRadius: "4px" }}>
+                        <select name="typeOfPart" style={{ padding: "8px", borderRadius: "4px" }}>
                             <option value={301}>301</option>
-                            <option selected value={501}>501</option>
+                            <option defaultValue={501}>501</option>
                             <option value={701}>701</option>
                         </select>
                     </label>
 
-                    <label htmlFor="" style={{ marginBottom: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {/* Sélecteur du type de sortie : simple ou double */}
+                    <label style={{ marginBottom: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de sortie
-                        <select name="typeOfSort" style={{ padding: "8px", borderRadius: "4px" }} value={typeOfSort} 
-                        onChange={(e) => setTypeOfSort(e.target.value)}>
+                        <select
+                            name="typeOfSort"
+                            style={{ padding: "8px", borderRadius: "4px" }}
+                            value={typeOfSort}
+                            onChange={(e) => setTypeOfSort(e.target.value)}
+                        >
                             <option value={"simple"}>Simple</option>
-                            <option selected value={"double"}>Double</option>
+                            <option defaultValue={"double"}>Double</option>
                         </select>
                     </label>
 
+                    {/* Bouton de soumission : affiché uniquement si tous les noms sont remplis */}
                     {PlayersNameTrue() && (
                         <input
                             type="submit"
