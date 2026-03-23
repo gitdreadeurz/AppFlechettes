@@ -45,6 +45,12 @@ html, body, #root{
     font-weight: 600;
 }
 
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+} */
 /* Style des labels */
 .config-form label {
     display: flex;

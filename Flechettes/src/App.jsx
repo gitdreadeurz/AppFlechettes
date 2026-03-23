@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EndGame from "./pages/EndGame";
 import Config from "./pages/Config";
+import GamePage from "./pages/GamePage";
 
 export default function App() {
   const [screen, setScreen] = useState("end");
@@ -58,7 +59,7 @@ export default function App() {
   if (screen === "game") {
     return (
       <div style={placeholderStyles.page}>
-        <h1>Écran de jeu</h1>
+        <GamePage/>
       </div>
     );
   }
