@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import configWallpaper from "../assets/configWall.jpg";
 
 const Config = () => {
@@ -7,6 +7,11 @@ const Config = () => {
     const [thirdPlayer, setThirdPlayer] = useState("Joueur 3");
     const [fourthPlayer, setFourthPlayer] = useState("Joueur 4");
     const [playerCount, setPlayerCount] = useState(2);
+    const [typeOfSort, setTypeOfSort] = useState("");
+    const [gameConfig, setGameConfig] = useState([]);
+
+    
+    
 
     const PlayersNameTrue = () => {
         if (playerCount >= 1 && firstPlayer.trim() === "") return false;
@@ -16,24 +21,25 @@ const Config = () => {
         return true;
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();    
+        const form = event.target;
+        const formData = new FormData(form);
+        const formDataObj = Object.fromEntries(formData.entries());
+
+
+        setGameConfig(formDataObj)  
+    }
+    
+    console.log(gameConfig);
+    
+    
     return (
         <>
             <div
                 className="config-container"
-                style={{
-                    backgroundImage: `url(${configWallpaper})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    height: "100vh", // Empêche le scroll vertical
-                    width: "100vw", // Prend toute la largeur de l'écran
-                    overflow: "hidden", // Désactive le scroll
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
             >
-                <form
+                <form onSubmit={handleSubmit}
                     className="config-form"
                     style={{
                         backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -45,7 +51,7 @@ const Config = () => {
                     }}
                 >
                     <h2 style={{ marginBottom: "20px", textAlign: "center" }}>Configuration de la partie</h2>
-                    <label htmlFor="playerQuantity" style={{ marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <label htmlFor="playerQuantity" >
                         Nombre de joueurs
                         <select
                             name="playerQuantity"
@@ -61,6 +67,7 @@ const Config = () => {
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px", margin: "15px 0" }}>
                         <input
+                            name="firstPlayer"
                             type="text"
                             value={firstPlayer}
                             onChange={(e) => setFirstPlayer(e.target.value)}
@@ -68,6 +75,7 @@ const Config = () => {
                             style={{ padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                         />
                         <input
+                            name="secondPlayer"
                             type="text"
                             value={secondPlayer}
                             onChange={(e) => setSecondPlayer(e.target.value)}
@@ -76,6 +84,7 @@ const Config = () => {
                         />
                         {playerCount >= 3 && (
                             <input
+                                name="thirdPlayer"
                                 type="text"
                                 value={thirdPlayer}
                                 onChange={(e) => setThirdPlayer(e.target.value)}
@@ -85,6 +94,7 @@ const Config = () => {
                         )}
                         {playerCount >= 4 && (
                             <input
+                                name="fourthPlayer"
                                 type="text"
                                 value={fourthPlayer}
                                 onChange={(e) => setFourthPlayer(e.target.value)}
@@ -96,18 +106,21 @@ const Config = () => {
 
                     <label htmlFor="" style={{ marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de partie
-                        <select name="typeOfGame" style={{ padding: "8px", borderRadius: "4px" }}>
-                            <option value="301">301</option>
-                            <option selected value="501">501</option>
-                            <option value="701">701</option>
+                        <select 
+                                name="typeOfPart"
+                                style={{ padding: "8px", borderRadius: "4px" }}>
+                            <option value={301}>301</option>
+                            <option selected value={501}>501</option>
+                            <option value={701}>701</option>
                         </select>
                     </label>
 
                     <label htmlFor="" style={{ marginBottom: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de sortie
-                        <select name="typeOfSort" style={{ padding: "8px", borderRadius: "4px" }}>
-                            <option value="simple">Simple</option>
-                            <option selected value="double">Double</option>
+                        <select name="typeOfSort" style={{ padding: "8px", borderRadius: "4px" }} value={typeOfSort} 
+                        onChange={(e) => setTypeOfSort(e.target.value)}>
+                            <option value={"simple"}>Simple</option>
+                            <option selected value={"double"}>Double</option>
                         </select>
                     </label>
 
