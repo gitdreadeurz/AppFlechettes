@@ -1,13 +1,87 @@
+import React, { useState } from "react";
+import EndGame from "./pages/EndGame";
+import Config from "./pages/Config";
 import GamePage from "./pages/GamePage";
-import GamePageia from "./pages/GamePageIA";
 
-function App () {
+export default function App() {
+  const [screen, setScreen] = useState("end");
 
-    return <>
-    <GamePage/>
-    
-    
-    </>;
+  const result = {
+    winner: "Simon",
+    startingScore: 501,
+    checkoutType: "double",
+    totalRounds: 12,
+    playersStats: [
+      {
+        name: "Simon",
+        turns: 12,
+        totalScored: 501,
+        remainingScore: 0,
+        averagePerTurn: 41.8,
+      },
+      {
+        name: "Alex",
+        turns: 12,
+        totalScored: 438,
+        remainingScore: 63,
+        averagePerTurn: 36.5,
+      },
+      {
+        name: "Léo",
+        turns: 12,
+        totalScored: 401,
+        remainingScore: 100,
+        averagePerTurn: 33.4,
+      },
+    ],
+  };
+
+  const handleReplay = () => {
+    console.log("Rejouer avec les mêmes paramètres");
+    setScreen("game");
+  };
+
+  const handleNewGame = () => {
+    console.log("Retour à la configuration");
+    setScreen("home");
+  };
+
+  if (screen === "end") {
+    return (
+      <EndGame
+        result={result}
+        onReplay={handleReplay}
+        onNewGame={handleNewGame}
+      />
+    );
+  }
+
+  if (screen === "game") {
+    return (
+      <div style={placeholderStyles.page}>
+        <GamePage/>
+      </div>
+    );
+  }
+
+  return (
+    <div style={placeholderStyles.page}>
+      <Config />
+    </div>
+  );
 }
- 
-export default App;
+
+const placeholderStyles = {
+  page: {
+    minHeight: "100vh",
+    background: "#0D1B2A",
+    color: "#F1FAEE",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: "Inter, sans-serif",
+  },
+};
+
+
+
