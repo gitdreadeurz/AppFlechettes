@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EndGame from "./pages/EndGame";
+import Config from "./pages/Config";
 
 export default function App() {
   const [screen, setScreen] = useState("end");
@@ -64,7 +65,7 @@ export default function App() {
 
   return (
     <div style={placeholderStyles.page}>
-      <h1>Écran d’accueil / configuration</h1>
+      <Config />
     </div>
   );
 }
@@ -80,3 +81,7 @@ const placeholderStyles = {
     fontFamily: "Inter, sans-serif",
   },
 };
+
+}
+
+
