@@ -34,7 +34,6 @@ const GamePage = ({ config }) => {
     const tableauHistorique2P4 = pointsPlayer4.length > 1 ? pointsPlayer4[pointsPlayer4.length - 2] : [];
     const tableauHistorique3P4 = pointsPlayer4.length > 2 ? pointsPlayer4[pointsPlayer4.length - 3] : [];
     const gameMode = 301
-    const nbplayer = 4
 
     function suggestion() {
         if ((gameMode - totPlayer1) < 170) {
@@ -43,45 +42,7 @@ const GamePage = ({ config }) => {
     }
 
     return <>
-        {/* <button
-            disabled={tour.length >= 3}
-            onClick={() => {
-                setTour([...tour, points])
-            }}>Valider la flèche</button>
-        <p>{points}</p>
-        <button
-            onClick={() => {
-                if (currentPlayer === 1) {
-                    setHistoriquePlayer1([...historiquePlayer1, totTour])
-                    setPointsPlayer1([...pointsPlayer1, [tour]])
-                    setTour([])
-                    setCible(0)
-                    setCurrentPlayer(currentPlayer + 1)
-                } else if (currentPlayer === 2) {
-                    setHistoriquePlayer2([...historiquePlayer2, totTour])
-                    setPointsPlayer2([...pointsPlayer2, [tour]])
-                    setTour([])
-                    setCible(0)
-                    setCurrentPlayer(currentPlayer + 1)
-                } else if (currentPlayer === 3 && !nbplayer < 3) {
-                    setHistoriquePlayer3([...historiquePlayer3, totTour])
-                    setPointsPlayer3([...pointsPlayer3, [tour]])
-                    setTour([])
-                    setCible(0)
-                    setCurrentPlayer(currentPlayer + 1)
-                } else if (currentPlayer === 4) {
-                    setHistoriquePlayer4([...historiquePlayer4, totTour])
-                    setPointsPlayer4([...pointsPlayer4, [tour]])
-                    setTour([])
-                    setCible(0)
-                    setCurrentPlayer(currentPlayer + 1)
-                    setCurrentPlayer(1)
-                } else {
-                    setTour([])
-                    setCible(0)
-                }
-            }
-            }>Valider le tour</button > */}
+    
         <div name="tableau"
             style={{
                 display: "grid",
@@ -235,12 +196,12 @@ const GamePage = ({ config }) => {
             <div name="ligne7"
                 style={{
                     display: "flex",
-                    justifyContent : "space-around",
-                    alignItems :"center",
+                    justifyContent: "space-around",
+                    alignItems: "center",
                     border: "solid red 1px",
                     width: "30vw",
-                    
-                   
+
+
 
                 }}>
                 <button
@@ -256,28 +217,39 @@ const GamePage = ({ config }) => {
                             setTour([])
                             setCible(0)
                             setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 2) {
+                        }
+                        if (currentPlayer === 2) {
                             setHistoriquePlayer2([...historiquePlayer2, totTour])
                             setPointsPlayer2([...pointsPlayer2, [tour]])
                             setTour([])
                             setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 3 && !nbplayer < 3) {
+                            if (config.playerQuantity === "2") {
+                                setCurrentPlayer(1)
+                            } else {
+                                setCurrentPlayer(currentPlayer + 1)
+                            }
+                        }
+                        if (currentPlayer === 3) {
                             setHistoriquePlayer3([...historiquePlayer3, totTour])
                             setPointsPlayer3([...pointsPlayer3, [tour]])
                             setTour([])
                             setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 4) {
+                            if (config.playerQuantity === "3") {
+                                setCurrentPlayer(1)
+                            } else {
+                                setCurrentPlayer(currentPlayer + 1)
+                            }
+                        }
+                        if (currentPlayer === 4) {
                             setHistoriquePlayer4([...historiquePlayer4, totTour])
                             setPointsPlayer4([...pointsPlayer4, [tour]])
                             setTour([])
                             setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                            setCurrentPlayer(1)
-                        } else {
-                            setTour([])
-                            setCible(0)
+                            if (config.playerQuantity === "4") {
+                                setCurrentPlayer(1)
+                            } else {
+                                setCurrentPlayer(currentPlayer + 1)
+                            }
                         }
                     }
                     }>Valider le tour</button >
