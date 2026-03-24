@@ -2,7 +2,6 @@ import React from "react";
 
 export default function EndGame({ result, onReplay, onNewGame }) {
   if (!result) return null;
-
   const {
     winner,
     startingScore,
