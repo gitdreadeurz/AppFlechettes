@@ -1,4 +1,4 @@
-const ButtonCible = ({ chiffre, setCible, cible }) => {
+const ButtonCible = ({ chiffre, setCible, cible, setCoef }) => {
 
     return (
         <button
@@ -9,7 +9,7 @@ const ButtonCible = ({ chiffre, setCible, cible }) => {
                 width: "40px",
                 height: "40px",
             }}
-            onClick={() => setCible(chiffre)}
+            onClick={() => {setCible(chiffre);setCoef(1)}}
         >
             {chiffre}
         </button>
