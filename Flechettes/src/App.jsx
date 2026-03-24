@@ -58,6 +58,11 @@ export default function App() {
     setScreen("home");
   };
 
+  const handleEndGame = () => {
+    console.log("Fin de partie");
+    setScreen("end");
+  };
+
   /**
    * Callback appelé par le composant Config une fois la partie configurée.
    * Sauvegarde la config et navigue vers l'écran de jeu.
@@ -83,7 +88,9 @@ export default function App() {
   if (screen === "game") {
     return (
       <div style={placeholderStyles.page}>
-        <GamePage config={gameConfig} />
+        <GamePage config={gameConfig} 
+        handleEndGame={handleEndGame}
+        />
       </div>
     );
   }
