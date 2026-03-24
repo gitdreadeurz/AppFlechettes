@@ -4,7 +4,7 @@ import Config from "./pages/Config";
 import GamePage from "./pages/GamePage";
 
 export default function App() {
-  const [screen, setScreen] = useState("end");
+  const [screen, setScreen] = useState("game");
 
   const result = {
     winner: "Simon",
