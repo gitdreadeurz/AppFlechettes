@@ -4,7 +4,7 @@ import ButtonCible from "./bouton";
 
 const GamePage = ({ config }) => {
     const [cible, setCible] = useState(null)
-    const [coef, setCoef] = useState(null)
+    const [coef, setCoef] = useState(1)
     const points = coef * cible
     const [tour, setTour] = useState([])
     const [historiquePlayer1, setHistoriquePlayer1] = useState([])
@@ -42,7 +42,7 @@ const GamePage = ({ config }) => {
     }
 
     return <>
-    
+
         <div name="tableau"
             style={{
                 display: "grid",
@@ -155,29 +155,29 @@ const GamePage = ({ config }) => {
                     justifyItems: "center",
                     alignItems: "center",
                 }}>
-                <ButtonCible chiffre={0} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={1} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={2} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={3} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={4} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={5} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={6} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={7} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={8} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={9} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={10} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={11} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={12} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={13} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={14} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={15} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={16} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={17} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={18} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={19} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={20} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={25} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={50} cible={cible} setCible={setCible} />
+                <ButtonCible chiffre={0} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={1} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={2} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={3} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={4} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={5} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={6} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={7} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={8} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={9} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={10} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={11} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={12} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={13} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={14} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={15} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={16} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={17} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={18} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={19} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={20} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={25} cible={cible} setCible={setCible} setCoef={setCoef} />
+                <ButtonCible chiffre={50} cible={cible} setCible={setCible} setCoef={setCoef} />
             </div>
             <div name="ligne6"
                 style={{
@@ -200,16 +200,15 @@ const GamePage = ({ config }) => {
                     alignItems: "center",
                     border: "solid red 1px",
                     width: "30vw",
-
-
-
                 }}>
                 <button
-                    disabled={tour.length >= 3}
+                    disabled={tour.length >= 3 || cible===null}
                     onClick={() => {
                         setTour([...tour, points])
+                        setCible(null)
                     }}>Valider la flèche</button>
                 <button
+                    disabled={tour.length < 3}
                     onClick={() => {
                         if (currentPlayer === 1) {
                             setHistoriquePlayer1([...historiquePlayer1, totTour])
@@ -253,6 +252,10 @@ const GamePage = ({ config }) => {
                         }
                     }
                     }>Valider le tour</button >
+                    <button
+                    onClick={()=>{tour.pop(); let newArray=[...tour];setTour(newArray)}}>Annuler precedente flêche</button>
+                    
+                    
                 <p>{points}</p>
             </div>
             <div name="ligne8"
