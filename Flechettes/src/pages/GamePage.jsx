@@ -3,8 +3,8 @@ import { useState } from "react";
 import ButtonCible from "./bouton";
 
 const GamePage = ({ config }) => {
-    const [cible, setCible] = useState(null)
-    const [coef, setCoef] = useState(null)
+    const [cible, setCible] = useState(0)
+    const [coef, setCoef] = useState(1)
     const points = coef * cible
     const [tour, setTour] = useState([])
     const [historiquePlayer1, setHistoriquePlayer1] = useState([])
@@ -42,7 +42,7 @@ const GamePage = ({ config }) => {
     }
 
     return <>
-        {/* <button
+        <button
             disabled={tour.length >= 3}
             onClick={() => {
                 setTour([...tour, points])
@@ -91,7 +91,7 @@ const GamePage = ({ config }) => {
                     }
                 }
             }
-            }>Valider le tour</button > */}
+            }>Valider le tour</button >
         <div name="tableau"
             style={{
                 display: "grid",
@@ -204,29 +204,29 @@ const GamePage = ({ config }) => {
                     justifyItems: "center",
                     alignItems: "center",
                 }}>
-                <ButtonCible chiffre={0} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={1} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={2} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={3} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={4} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={5} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={6} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={7} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={8} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={9} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={10} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={11} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={12} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={13} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={14} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={15} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={16} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={17} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={18} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={19} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={20} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={25} cible={cible} setCible={setCible} />
-                <ButtonCible chiffre={50} cible={cible} setCible={setCible} />
+                <ButtonCible chiffre={0} setCible={setCible} />
+                <ButtonCible chiffre={1} setCible={setCible} />
+                <ButtonCible chiffre={2} setCible={setCible} />
+                <ButtonCible chiffre={3} setCible={setCible} />
+                <ButtonCible chiffre={4} setCible={setCible} />
+                <ButtonCible chiffre={5} setCible={setCible} />
+                <ButtonCible chiffre={6} setCible={setCible} />
+                <ButtonCible chiffre={7} setCible={setCible} />
+                <ButtonCible chiffre={8} setCible={setCible} />
+                <ButtonCible chiffre={9} setCible={setCible} />
+                <ButtonCible chiffre={10} setCible={setCible} />
+                <ButtonCible chiffre={11} setCible={setCible} />
+                <ButtonCible chiffre={12} setCible={setCible} />
+                <ButtonCible chiffre={13} setCible={setCible} />
+                <ButtonCible chiffre={14} setCible={setCible} />
+                <ButtonCible chiffre={15} setCible={setCible} />
+                <ButtonCible chiffre={16} setCible={setCible} />
+                <ButtonCible chiffre={17} setCible={setCible} />
+                <ButtonCible chiffre={18} setCible={setCible} />
+                <ButtonCible chiffre={19} setCible={setCible} />
+                <ButtonCible chiffre={20} setCible={setCible} />
+                <ButtonCible chiffre={25} setCible={setCible} />
+                <ButtonCible chiffre={50} setCible={setCible} />
             </div>
             <div name="ligne6"
                 style={{
@@ -238,61 +238,18 @@ const GamePage = ({ config }) => {
                     gap: "10px"
                 }}>
                 coéficient
-                <button style={{ backgroundColor: coef === 1 ? "green" : "red" }} onClick={() => { setCoef(1) }} disabled={cible === null}>Simple</button>
-                <button style={{ backgroundColor: coef === 2 ? "green" : "red" }} onClick={() => { setCoef(2) }} disabled={cible === null || cible === 25 || cible === 50}>Double</button>
-                <button style={{ backgroundColor: coef === 3 ? "green" : "red" }} onClick={() => { setCoef(3) }} disabled={cible === null || cible === 25 || cible === 50}>Triple</button>
+                <button onClick={() => { setCoef(1) }}>Simple</button>
+                <button onClick={() => { setCoef(2) }}>Double</button>
+                <button onClick={() => { setCoef(3) }}>Triple</button>
             </div>
             <div name="ligne7"
                 style={{
                     display: "flex",
-                    justifyContent : "space-around",
-                    alignItems :"center",
                     border: "solid red 1px",
                     width: "30vw",
-                    
-                   
-
-                }}>
-                <button
-                    disabled={tour.length >= 3}
-                    onClick={() => {
-                        setTour([...tour, points])
-                    }}>Valider la flèche</button>
-                <button
-                    onClick={() => {
-                        if (currentPlayer === 1) {
-                            setHistoriquePlayer1([...historiquePlayer1, totTour])
-                            setPointsPlayer1([...pointsPlayer1, [tour]])
-                            setTour([])
-                            setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 2) {
-                            setHistoriquePlayer2([...historiquePlayer2, totTour])
-                            setPointsPlayer2([...pointsPlayer2, [tour]])
-                            setTour([])
-                            setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 3 && !nbplayer < 3) {
-                            setHistoriquePlayer3([...historiquePlayer3, totTour])
-                            setPointsPlayer3([...pointsPlayer3, [tour]])
-                            setTour([])
-                            setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                        } else if (currentPlayer === 4) {
-                            setHistoriquePlayer4([...historiquePlayer4, totTour])
-                            setPointsPlayer4([...pointsPlayer4, [tour]])
-                            setTour([])
-                            setCible(0)
-                            setCurrentPlayer(currentPlayer + 1)
-                            setCurrentPlayer(1)
-                        } else {
-                            setTour([])
-                            setCible(0)
-                        }
-                    }
-                    }>Valider le tour</button >
-                <p>{points}</p>
-            </div>
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>tour suivant</div>
             <div name="ligne8"
                 style={{
                     display: "flex",
@@ -310,6 +267,8 @@ const GamePage = ({ config }) => {
                         <div>  {tableauHistorique3P1.join(" ")}</div>
                 </>
                 )}
+            
+
                 {currentPlayer === 2 && (<>
                     <div>  {tableauHistorique1P2.join(" ")}</div>
                     <div>  {tableauHistorique2P2.join(" ")}</div>
