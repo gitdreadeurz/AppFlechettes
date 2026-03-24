@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ButtonCible from "./bouton";
 
-const GamePage = ({ config }) => {
+const GamePage = ({ config, handleEndGame }) => {
     const [cible, setCible] = useState(null)
     const [coef, setCoef] = useState(1)
     const points = coef * cible
@@ -23,9 +23,53 @@ const GamePage = ({ config }) => {
     const totTour = tour.reduce((acc, val) => acc + val, 0);
     const typeDePartie = config.typeOfPart
     const totalPlayer1 = typeDePartie - totPlayer1 ;
+    useEffect(() => {
+        if (totalPlayer1 === 0) {
+            handleEndGame();
+        }
+        if (totalPlayer1 < 0) {
+            alert(config.firstPlayer + " a un score trop élevé")
+            setHistoriquePlayer1(historiquePlayer1.slice(0, -1))
+            setTour([])
+            setCible(0)
+        }
+    }, [totalPlayer1])
     const totalPlayer2 = typeDePartie - totPlayer2 ;
+    useEffect(() => {
+        if (totalPlayer2 === 0) {
+            handleEndGame();
+        }
+        if (totalPlayer2 < 0) {
+            alert(config.secondPlayer + " a un score trop élevé")
+            setHistoriquePlayer2(historiquePlayer2.slice(0, -1))
+            setTour([])
+            setCible(0)
+        }
+    }, [totalPlayer2])
     const totalPlayer3 = typeDePartie - totPlayer3 ;
+    useEffect(() => {
+        if (totalPlayer3 === 0) {
+            handleEndGame();
+        }
+        if (totalPlayer3 < 0) {
+            alert(config.thirdPlayer + " a un score trop élevé")
+            setHistoriquePlayer3(historiquePlayer3.slice(0, -1))
+            setTour([])
+            setCible(0)
+        }
+    }, [totalPlayer3])
     const totalPlayer4 = typeDePartie - totPlayer4 ;
+    useEffect(() => {
+        if (totalPlayer4 === 0) {
+            handleEndGame();
+        }
+        if (totalPlayer4 < 0) {
+            alert(config.fourthPlayer + " a un score trop élevé")
+            setHistoriquePlayer4(historiquePlayer4.slice(0, -1))
+            setTour([])
+            setCible(0)
+        }
+    }, [totalPlayer4])
     const tableauHistorique1P1 = pointsPlayer1.length > 0 ? pointsPlayer1[pointsPlayer1.length - 1] : [];
     const tableauHistorique2P1 = pointsPlayer1.length > 1 ? pointsPlayer1[pointsPlayer1.length - 2] : [];
     const tableauHistorique3P1 = pointsPlayer1.length > 2 ? pointsPlayer1[pointsPlayer1.length - 3] : [];
@@ -132,7 +176,6 @@ const GamePage = ({ config }) => {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>Suggestions
-                
             </div>
             <div name="ligne4"
                 style={{
@@ -143,7 +186,7 @@ const GamePage = ({ config }) => {
                     width: '100%',
                     justifyContent: 'center',
                     justifyItems: "center",
-                    alignItems: "center",
+                    alignItems: "center"
                 }}>
                 {tour.map((num, index) => (
                     <div key={index}>{num}</div>))}
