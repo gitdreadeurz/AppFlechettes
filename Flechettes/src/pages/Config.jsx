@@ -48,8 +48,11 @@ const Config = ({ setGameConfig }) => {
         // Convertit les entrées du formulaire en objet clé/valeur simple
         const formDataObj = Object.fromEntries(formData.entries());
 
+        console.log(formDataObj);
         setGameConfig(formDataObj); // Déclenche la navigation vers l'écran de jeu
     };
+
+    
 
     return (
         <>

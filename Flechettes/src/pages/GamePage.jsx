@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import ButtonCible from "./bouton";
 
-const GamePage = ({config}) => {
-    // const [cible, setCible] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 50])
+const GamePage = ({ config }) => {
     const [cible, setCible] = useState(0)
     const [coef, setCoef] = useState(1)
     const points = coef * cible
@@ -47,13 +46,9 @@ const GamePage = ({config}) => {
         <button
             disabled={tour.length >= 3}
             onClick={() => {
-
-                // const index = Math.floor(Math.random() * cible.length)
-                // setPoint(cible[index])
                 setTour([...tour, points])
             }}>Valider la flèche</button>
         <p>{points}</p>
-
         <button
             onClick={() => {
                 if (currentPlayer === 1) {
@@ -68,7 +63,7 @@ const GamePage = ({config}) => {
                     setTour([])
                     setCible(0)
                     setCurrentPlayer(currentPlayer + 1)
-                } else if (currentPlayer === 3 && !nbplayer <3) {
+                } else if (currentPlayer === 3 && !nbplayer < 3) {
                     setHistoriquePlayer3([...historiquePlayer3, totTour])
                     setPointsPlayer3([...pointsPlayer3, [tour]])
                     setTour([])
@@ -87,7 +82,6 @@ const GamePage = ({config}) => {
                 }
             }
             }>Valider le tour</button >
-
         <div name="tableau"
             style={{
                 display: "grid",
@@ -105,14 +99,12 @@ const GamePage = ({config}) => {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>{config.typeOfPart}</div>
-
             <div name="ligne2"
                 style={{ display: "flex" }}>
-
                 <div name="player1"
                     style={{
                         border: "solid green 1px",
-                        width: `${100 / nbplayer}%`,
+                        width: `${100 / config.playerQuantity}%`,
                         height: "100%",
                         alignItems: "center",
                         display: "flex",
@@ -122,11 +114,10 @@ const GamePage = ({config}) => {
                     }}>{config.firstPlayer}
                     <p>{totPlayer1}</p>
                 </div>
-
                 <div name="player2"
                     style={{
                         border: "solid green 1px",
-                        width: `${100 / nbplayer}%`,
+                        width: `${100 /  config.playerQuantity}%`,
                         height: "100%",
                         alignItems: "center",
                         display: "flex",
@@ -137,79 +128,33 @@ const GamePage = ({config}) => {
                     <p>{totPlayer2}</p>
                 </div>
                 {config.playerQuantity >= 3 && (
-
-
-
-
-
-
-
-
-               
                     <div name="player3"
                         style={{
                             border: "solid green 1px",
-                            width: `${100 / nbplayer}%`,
+                            width: `${100 /  config.playerQuantity}%`,
                             height: "100%",
                             alignItems: "center",
                             display: "flex",
                             justifyContent: "center",
 
                             flexDirection: "column"
-                        }}>player3
+                        }}>{config.thirdPlayer}
                         <p>{totPlayer3}</p>
                     </div>)}
-                {nbplayer >= 4 && (
+                {config.playerQuantity >= 4 && (
                     <div name="player4"
                         style={{
                             border: "solid green 1px",
-                            width: `${100 / nbplayer}%`,
+                            width: `${100 /  config.playerQuantity}%`,
                             height: "100%",
                             alignItems: "center",
                             display: "flex",
                             justifyContent: "center",
 
                             flexDirection: "column"
-                        }}>player4
-                        <p>{totPlayer3}</p>
+                        }}>{config.fourthPlayer}
+                        <p>{totPlayer4}</p>
                     </div>)}
-
-
-
-
-
-
-
-
-
-
-
-
-                {/* <div name="player3"
-                    style={{
-                        border: "solid green 1px",
-                        width: "25%",
-                        height: "100%",
-                        alignItems: "center",
-                        display: "flex",
-                        justifyContent: "center",
-                        display: "flex",
-                        flexDirection: "column"
-                    }}>{config.thirdPlayer}
-                    <p>{totPlayer3}</p></div>)}
-                {config.playerQuantity >= 4 && (
-                <div name="player4"
-                    style={{
-                        border: "solid green 1px",
-                        width: "25%",
-                        height: "100%",
-                        alignItems: "center",
-                        display: "flex",
-                        justifyContent: "center",
-                        display: "flex",
-                        flexDirection: "column"
-                    }}>{config.fourthPlayer}
-                    <p>{totPlayer4}</p></div>)} */}
             </div>
             <div name="ligne3"
                 style={{
@@ -223,7 +168,6 @@ const GamePage = ({config}) => {
                 <p> {suggestion()}
                 </p>
             </div>
-
             <div name="ligne4"
                 style={{
                     display: "grid",
@@ -273,18 +217,6 @@ const GamePage = ({config}) => {
                 <ButtonCible chiffre={20} setCible={setCible} />
                 <ButtonCible chiffre={25} setCible={setCible} />
                 <ButtonCible chiffre={50} setCible={setCible} />
-
-                {/* {cible.map((num) => (
-                    <span
-                        key={num}
-                        style={{
-                            fontWeight: num === point ? 'bold' : 'normal',
-                            color: num === point ? 'red' : 'inherit',
-                            backgroundColor: num === point ? 'yellow' : 'inherit',
-                        }}
-                    >
-                        {num}
-                    </span>))} */}
             </div>
             <div name="ligne6"
                 style={{
