@@ -21,6 +21,11 @@ const GamePage = ({ config }) => {
     const totPlayer3 = historiquePlayer3.reduce((acc, valeur) => acc + valeur, 0);
     const totPlayer4 = historiquePlayer4.reduce((acc, valeur) => acc + valeur, 0);
     const totTour = tour.reduce((acc, val) => acc + val, 0);
+    const typeDePartie = config.typeOfPart
+    const totalPlayer1 = typeDePartie - totPlayer1 ;
+    const totalPlayer2 = typeDePartie - totPlayer2 ;
+    const totalPlayer3 = typeDePartie - totPlayer3 ;
+    const totalPlayer4 = typeDePartie - totPlayer4 ;
     const tableauHistorique1P1 = pointsPlayer1.length > 0 ? pointsPlayer1[pointsPlayer1.length - 1] : [];
     const tableauHistorique2P1 = pointsPlayer1.length > 1 ? pointsPlayer1[pointsPlayer1.length - 2] : [];
     const tableauHistorique3P1 = pointsPlayer1.length > 2 ? pointsPlayer1[pointsPlayer1.length - 3] : [];
@@ -33,13 +38,14 @@ const GamePage = ({ config }) => {
     const tableauHistorique1P4 = pointsPlayer4.length > 0 ? pointsPlayer4[pointsPlayer4.length - 1] : [];
     const tableauHistorique2P4 = pointsPlayer4.length > 1 ? pointsPlayer4[pointsPlayer4.length - 2] : [];
     const tableauHistorique3P4 = pointsPlayer4.length > 2 ? pointsPlayer4[pointsPlayer4.length - 3] : [];
-    const gameMode = 301
 
-    function suggestion() {
-        if ((gameMode - totPlayer1) < 170) {
-            totPlayer1
-        }
-    }
+    
+
+    // function suggestion() {
+    //     if ((gameMode - totPlayer1) < 170) {
+    //         totPlayer1
+    //     }
+    // }
 
     return <>
     
@@ -73,7 +79,7 @@ const GamePage = ({ config }) => {
                         display: "flex",
                         flexDirection: "column"
                     }}>{config.firstPlayer}
-                    <p>{totPlayer1}</p>
+                    <p>{totalPlayer1}</p>
                 </div>
                 <div name="player2"
                     style={{
@@ -86,7 +92,7 @@ const GamePage = ({ config }) => {
                         display: "flex",
                         flexDirection: "column"
                     }}>{config.secondPlayer}
-                    <p>{totPlayer2}</p>
+                    <p>{totalPlayer2}</p>
                 </div>
                 {config.playerQuantity >= 3 && (
                     <div name="player3"
@@ -100,7 +106,7 @@ const GamePage = ({ config }) => {
 
                             flexDirection: "column"
                         }}>{config.thirdPlayer}
-                        <p>{totPlayer3}</p>
+                        <p>{totalPlayer3}</p>
                     </div>)}
                 {config.playerQuantity >= 4 && (
                     <div name="player4"
@@ -114,7 +120,7 @@ const GamePage = ({ config }) => {
 
                             flexDirection: "column"
                         }}>{config.fourthPlayer}
-                        <p>{totPlayer4}</p>
+                        <p>{totalPlayer4}</p>
                     </div>)}
             </div>
             <div name="ligne3"
@@ -126,8 +132,7 @@ const GamePage = ({ config }) => {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>Suggestions
-                <p> {suggestion()}
-                </p>
+                
             </div>
             <div name="ligne4"
                 style={{
