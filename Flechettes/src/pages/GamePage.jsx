@@ -315,7 +315,7 @@ const GamePage = ({ config, handleEndGame }) => {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-                <div>Historique Joueur : {currentPlayer}</div>
+                <div>Historique {currentPlayer===1 ? config.firstPlayer:currentPlayer===2 ? config.secondPlayer : currentPlayer===3 ? config.thirdPlayer : currentPlayer===4 ? config.fourthPlayer :""}</div>
                 {currentPlayer === 1 && (<>
                     <div>  {tableauHistorique1P1.join(" ")}</div>
                     <div>  {tableauHistorique2P1.join(" ")}</div>
