@@ -14,37 +14,8 @@ export default function App() {
 
   // Configuration de la partie en cours (définie depuis l'écran Config)
   const [gameConfig, setGameConfig] = useState(null);
+  const [gameResult, setGameResult] = useState(null);
 
-  // --- Données de résultat fictives (à remplacer par les vraies données de jeu) ---
-  const result = {
-    winner: "Simon",
-    startingScore: 501,
-    checkoutType: "double",
-    totalRounds: 12,
-    playersStats: [
-      {
-        name: "Simon",
-        turns: 12,
-        totalScored: 501,
-        remainingScore: 0,
-        averagePerTurn: 41.8,
-      },
-      {
-        name: "Alex",
-        turns: 12,
-        totalScored: 438,
-        remainingScore: 63,
-        averagePerTurn: 36.5,
-      },
-      {
-        name: "Léo",
-        turns: 12,
-        totalScored: 401,
-        remainingScore: 100,
-        averagePerTurn: 33.4,
-      },
-    ],
-  };
 
   // Relance une partie avec la même configuration (retour à l'écran de jeu)
   const handleReplay = () => {
@@ -58,8 +29,8 @@ export default function App() {
     setScreen("home");
   };
 
-  const handleEndGame = () => {
-    console.log("Fin de partie");
+  const handleEndGame = (resultat) => {
+    setGameResult(resultat);
     setScreen("end");
   };
 
@@ -77,9 +48,10 @@ export default function App() {
   if (screen === "end") {
     return (
       <EndGame
-        result={result}
         onReplay={handleReplay}
         onNewGame={handleNewGame}
+        resultat={gameResult}
+        
       />
     );
   }
@@ -97,7 +69,7 @@ export default function App() {
 
   // Écran par défaut : configuration / accueil
   return (
-    <div style={placeholderStyles.page}>
+    <div>
       <Config setGameConfig={handleGameStart} />
     </div>
   );
