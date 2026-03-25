@@ -1,213 +1,327 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function EndGame({ result, onReplay, onNewGame }) {
-  if (!result) return null;
-  const {
-    winner,
-    startingScore,
-    checkoutType,
-    totalRounds,
-    playersStats = [],
-  } = result;
+const EndGame = ({ resultat, onReplay, onNewGame }) => {
+  const [expandedPlayer, setExpandedPlayer] = useState(null);
+
+  if (!resultat) return null;
+
+  const joueurs = [
+    { nom: resultat.Joueur1, histo: resultat.HistoJoueur1 },
+    { nom: resultat.Joueur2, histo: resultat.HistoJoueur2 },
+    { nom: resultat.Joueur3, histo: resultat.HistoJoueur3 },
+    { nom: resultat.Joueur4, histo: resultat.HistoJoueur4 },
+  ].filter((j) => j.nom && j.nom.trim() !== "");
+
+  const calcStats = (histo) => {
+    const total = histo.reduce((acc, val) => acc + val, 0);
+    const tours = histo.length;
+    const moyenne = tours > 0 ? (total / tours).toFixed(1) : 0;
+    const meilleurTour = tours > 0 ? Math.max(...histo) : 0;
+    return { total, tours, moyenne, meilleurTour };
+  };
+
+  // Tri : gagnant en premier, puis par total décroissant
+  const joueursTriés = [...joueurs].sort((a, b) => {
+    if (a.nom === resultat.Gagnant) return -1;
+    if (b.nom === resultat.Gagnant) return 1;
+    return calcStats(b.histo).total - calcStats(a.histo).total;
+  });
+
+  const styles = {
+    page: {
+      height: "100vh",
+      background: "#0D1B2A",
+      color: "#F1FAEE",
+      fontFamily: "'Courier New', monospace",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "20px 20px 16px",
+      boxSizing: "border-box",
+      overflow: "hidden",
+    },
+    winnerSection: {
+      textAlign: "center",
+      marginBottom: "12px",
+      animation: "fadeInDown 0.6s ease",
+      flexShrink: 0,
+    },
+    crownIcon: {
+      fontSize: "28px",
+      display: "block",
+      marginBottom: "4px",
+    },
+    winnerLabel: {
+      fontSize: "15px",
+      letterSpacing: "6px",
+      textTransform: "uppercase",
+      color: "#E9C46A",
+      marginBottom: "4px",
+    },
+    winnerName: {
+      fontSize: "36px",
+      fontWeight: "bold",
+      color: "#E9C46A",
+      textShadow: "0 0 30px rgba(233,196,106,0.4)",
+      margin: "0 0 4px 0",
+      letterSpacing: "2px",
+    },
+    divider: {
+      width: "60px",
+      height: "2px",
+      background: "linear-gradient(90deg, transparent, #E9C46A, transparent)",
+      margin: "8px auto",
+    },
+    tableContainer: {
+      width: "100%",
+      maxWidth: "700px",
+      marginBottom: "12px",
+      flexShrink: 0,
+    },
+    tableTitle: {
+      fontSize: "15px",
+      letterSpacing: "4px",
+      textTransform: "uppercase",
+      color: "#A8DADC",
+      marginBottom: "8px",
+      textAlign: "center",
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+      fontSize: "15px",
+    },
+    th: {
+      padding: "6px 16px",
+      textAlign: "left",
+      fontSize: "10px",
+      letterSpacing: "3px",
+      textTransform: "uppercase",
+      color: "#457B9D",
+      borderBottom: "1px solid rgba(69,123,157,0.3)",
+    },
+    trWinner: {
+      background: "rgba(233,196,106,0.07)",
+      borderLeft: "3px solid #E9C46A",
+    },
+    trNormal: {
+      borderLeft: "3px solid transparent",
+    },
+    td: {
+      padding: "8px 16px",
+      borderBottom: "1px solid rgba(255,255,255,0.05)",
+    },
+    tdName: {
+      fontWeight: "bold",
+      letterSpacing: "1px",
+    },
+    badge: {
+      display: "inline-block",
+      fontSize: "9px",
+      letterSpacing: "2px",
+      background: "#E9C46A",
+      color: "#0D1B2A",
+      padding: "2px 6px",
+      borderRadius: "2px",
+      marginLeft: "8px",
+      verticalAlign: "middle",
+    },
+    histoSection: {
+      width: "100%",
+      maxWidth: "700px",
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      minHeight: 0,
+      marginBottom: "12px",
+    },
+    histoScroll: {
+      overflowY: "auto",
+      flex: 1,
+      minHeight: 0,
+    },
+    playerCard: {
+      marginBottom: "6px",
+      border: "1px solid rgba(168,218,220,0.15)",
+      borderRadius: "4px",
+      overflow: "hidden",
+    },
+    playerCardHeader: {
+      padding: "10px 16px",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      cursor: "pointer",
+      background: "rgba(255,255,255,0.03)",
+      userSelect: "none",
+    },
+    playerCardHeaderName: {
+      fontSize: "13px",
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+    },
+    playerCardBody: {
+      padding: "12px 16px",
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "8px",
+      background: "rgba(0,0,0,0.2)",
+    },
+    tourBadge: {
+      padding: "4px 10px",
+      background: "rgba(168,218,220,0.1)",
+      border: "1px solid rgba(168,218,220,0.2)",
+      borderRadius: "3px",
+      fontSize: "13px",
+      color: "#A8DADC",
+    },
+    tourBadgeBest: {
+      background: "rgba(233,196,106,0.15)",
+      border: "1px solid rgba(233,196,106,0.4)",
+      color: "#E9C46A",
+    },
+    buttons: {
+      display: "flex",
+      gap: "16px",
+      flexShrink: 0,
+    },
+    btnPrimary: {
+      padding: "10px 28px",
+      background: "transparent",
+      border: "1px solid #E9C46A",
+      color: "#E9C46A",
+      fontSize: "11px",
+      letterSpacing: "3px",
+      textTransform: "uppercase",
+      cursor: "pointer",
+      fontFamily: "'Courier New', monospace",
+      transition: "all 0.2s",
+    },
+    btnSecondary: {
+      padding: "10px 28px",
+      background: "transparent",
+      border: "1px solid rgba(255,255,255,0.2)",
+      color: "rgba(255,255,255,0.5)",
+      fontSize: "11px",
+      letterSpacing: "3px",
+      textTransform: "uppercase",
+      cursor: "pointer",
+      fontFamily: "'Courier New', monospace",
+      transition: "all 0.2s",
+    },
+  };
 
   return (
     <div style={styles.page}>
-      <div style={styles.container}>
-        <section style={styles.hero}>
-          <p style={styles.overline}>Fin de partie</p>
-          <h1 style={styles.winnerName}>{winner}</h1>
-          <p style={styles.winnerText}>remporte la partie</p>
-        </section>
+      <style>{`
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-primary:hover { background: rgba(233,196,106,0.1) !important; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.05) !important; color: rgba(255,255,255,0.8) !important; }
+      `}</style>
 
-        <section style={styles.card}>
-          <h2 style={styles.sectionTitle}>Résumé de la partie</h2>
+      {/* GAGNANT */}
+      <div style={styles.winnerSection}>
+        <span style={styles.crownIcon}>🎯</span>
+        <div style={styles.winnerLabel}>Vainqueur</div>
+        <h1 style={styles.winnerName}>{resultat.Gagnant}</h1>
+        <div style={styles.divider} />
+      </div>
 
-          <div style={styles.summaryGrid}>
-            <div style={styles.summaryItem}>
-              <span style={styles.summaryLabel}>Score de départ</span>
-              <strong style={styles.summaryValue}>{startingScore}</strong>
-            </div>
-
-            <div style={styles.summaryItem}>
-              <span style={styles.summaryLabel}>Type de sortie</span>
-              <strong style={styles.summaryValue}>
-                {checkoutType === "double" ? "Double obligatoire" : "Simple"}
-              </strong>
-            </div>
-
-            <div style={styles.summaryItem}>
-              <span style={styles.summaryLabel}>Nombre de tours</span>
-              <strong style={styles.summaryValue}>{totalRounds}</strong>
-            </div>
-
-            <div style={styles.summaryItem}>
-              <span style={styles.summaryLabel}>Vainqueur</span>
-              <strong style={styles.summaryValue}>{winner}</strong>
-            </div>
-          </div>
-        </section>
-
-        <section style={styles.card}>
-          <h2 style={styles.sectionTitle}>Statistiques des joueurs</h2>
-
-          <div style={styles.tableWrapper}>
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>Joueur</th>
-                  <th style={styles.th}>Tours</th>
-                  <th style={styles.th}>Points marqués</th>
-                  <th style={styles.th}>Score restant</th>
-                  <th style={styles.th}>Moyenne / tour</th>
+      {/* TABLEAU DES STATS */}
+      <div style={styles.tableContainer}>
+        <div style={styles.tableTitle}>Classement & Statistiques</div>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>Joueur</th>
+              <th style={styles.th}>Tours</th>
+              <th style={styles.th}>Total</th>
+              <th style={styles.th}>Moy / tour</th>
+              <th style={styles.th}>Meilleur tour</th>
+            </tr>
+          </thead>
+          <tbody>
+            {joueursTriés.map((j, i) => {
+              const stats = calcStats(j.histo);
+              const isWinner = j.nom === resultat.Gagnant;
+              return (
+                <tr key={i} style={isWinner ? styles.trWinner : styles.trNormal}>
+                  <td style={{ ...styles.td, ...styles.tdName }}>
+                    {j.nom}
+                    {isWinner && <span style={styles.badge}>GAGNANT</span>}
+                  </td>
+                  <td style={styles.td}>{stats.tours}</td>
+                  <td style={styles.td}>{stats.total} pts</td>
+                  <td style={styles.td}>{stats.moyenne} pts</td>
+                  <td style={styles.td}>{stats.meilleurTour} pts</td>
                 </tr>
-              </thead>
-              <tbody>
-                {playersStats.map((player) => (
-                  <tr
-                    key={player.name}
-                    style={player.name === winner ? styles.winnerRow : undefined}
-                  >
-                    <td style={styles.td}>{player.name}</td>
-                    <td style={styles.td}>{player.turns}</td>
-                    <td style={styles.td}>{player.totalScored}</td>
-                    <td style={styles.td}>{player.remainingScore}</td>
-                    <td style={styles.td}>{player.averagePerTurn}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
-        <div style={styles.actions}>
-          <button style={styles.primaryButton} onClick={onReplay}>
-            Rejouer
-          </button>
-
-          <button style={styles.secondaryButton} onClick={onNewGame}>
-            Nouvelle partie
-          </button>
+      {/* HISTORIQUE DÉTAILLÉ */}
+      <div style={styles.histoSection}>
+        <div style={styles.tableTitle}>Historique des tours</div>
+        <div style={styles.histoScroll}>
+          {joueursTriés.map((j, i) => {
+            const stats = calcStats(j.histo);
+            const isOpen = expandedPlayer === i;
+            return (
+              <div key={i} style={styles.playerCard}>
+                <div
+                  style={styles.playerCardHeader}
+                  onClick={() => setExpandedPlayer(isOpen ? null : i)}
+                >
+                  <span style={styles.playerCardHeaderName}>{j.nom}</span>
+                  <span style={{ color: "#457B9D", fontSize: "12px" }}>
+                    {isOpen ? "▲ Masquer" : "▼ Voir les tours"}
+                  </span>
+                </div>
+                {isOpen && (
+                  <div style={styles.playerCardBody}>
+                    {j.histo.map((score, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          ...styles.tourBadge,
+                          ...(score === stats.meilleurTour ? styles.tourBadgeBest : {}),
+                        }}
+                      >
+                        T{idx + 1} : {score}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
+      </div>
+
+      {/* BOUTONS */}
+      <div style={styles.buttons}>
+        <button
+          className="btn-primary"
+          style={styles.btnPrimary}
+          onClick={onReplay}
+        >
+          Rejouer
+        </button>
+        <button
+          className="btn-secondary"
+          style={styles.btnSecondary}
+          onClick={onNewGame}
+        >
+          Nouvelle partie
+        </button>
       </div>
     </div>
   );
-}
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    background: "#0D1B2A",
-    color: "#F1FAEE",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "24px",
-    fontFamily: "Inter, sans-serif",
-  },
-  container: {
-    width: "100%",
-    maxWidth: "900px",
-    display: "grid",
-    gap: "18px",
-  },
-  hero: {
-    background: "linear-gradient(135deg, #E63946, #b91c2b)",
-    borderRadius: "24px",
-    padding: "28px",
-    textAlign: "center",
-    boxShadow: "0 12px 40px rgba(0,0,0,0.3)",
-  },
-  overline: {
-    margin: 0,
-    fontSize: "0.95rem",
-    textTransform: "uppercase",
-    letterSpacing: "0.12em",
-  },
-  winnerName: {
-    margin: "10px 0 6px",
-    fontSize: "2.4rem",
-    fontWeight: 800,
-  },
-  winnerText: {
-    margin: 0,
-    fontSize: "1rem",
-  },
-  card: {
-    background: "#1B2838",
-    borderRadius: "20px",
-    padding: "22px",
-    boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
-  },
-  sectionTitle: {
-    marginTop: 0,
-    marginBottom: "16px",
-    fontSize: "1.3rem",
-    fontWeight: 800,
-  },
-  summaryGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-    gap: "12px",
-  },
-  summaryItem: {
-    background: "#102030",
-    borderRadius: "14px",
-    padding: "16px",
-  },
-  summaryLabel: {
-    display: "block",
-    color: "#c9d6df",
-    marginBottom: "6px",
-    fontSize: "0.92rem",
-  },
-  summaryValue: {
-    color: "#F1FAEE",
-    fontSize: "1.08rem",
-  },
-  tableWrapper: {
-    overflowX: "auto",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  th: {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #31465c",
-    color: "#c9d6df",
-    fontSize: "0.95rem",
-  },
-  td: {
-    padding: "12px",
-    borderBottom: "1px solid #26384a",
-  },
-  winnerRow: {
-    background: "rgba(230, 57, 70, 0.12)",
-  },
-  actions: {
-    display: "flex",
-    gap: "12px",
-    flexWrap: "wrap",
-  },
-  primaryButton: {
-    border: "none",
-    background: "#E63946",
-    color: "#fff",
-    padding: "14px 18px",
-    borderRadius: "12px",
-    fontWeight: 700,
-    fontSize: "1rem",
-    cursor: "pointer",
-  },
-  secondaryButton: {
-    border: "1px solid #4a6078",
-    background: "#1B2838",
-    color: "#F1FAEE",
-    padding: "14px 18px",
-    borderRadius: "12px",
-    fontWeight: 700,
-    fontSize: "1rem",
-    cursor: "pointer",
-  },
 };
+
+export default EndGame;

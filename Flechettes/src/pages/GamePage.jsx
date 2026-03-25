@@ -25,7 +25,17 @@ const GamePage = ({ config, handleEndGame }) => {
     const totalPlayer1 = typeDePartie - totPlayer1 ;
     useEffect(() => {
         if (totalPlayer1 === 0) {
-            handleEndGame();
+            handleEndGame({
+                HistoJoueur1 : historiquePlayer1,
+                HistoJoueur2 : historiquePlayer2,
+                HistoJoueur3 : historiquePlayer3,
+                HistoJoueur4 : historiquePlayer4,
+                Joueur1 : config.firstPlayer,
+                Joueur2 : config.secondPlayer,
+                Joueur3 : config.thirdPlayer,
+                Joueur4 : config.fourthPlayer,
+                Gagnant : config.firstPlayer
+            });
         }
         if (totalPlayer1 < 0) {
             alert(config.firstPlayer + " a un score trop élevé")
@@ -37,7 +47,17 @@ const GamePage = ({ config, handleEndGame }) => {
     const totalPlayer2 = typeDePartie - totPlayer2 ;
     useEffect(() => {
         if (totalPlayer2 === 0) {
-            handleEndGame();
+            handleEndGame({
+                HistoJoueur1 : historiquePlayer1,
+                HistoJoueur2 : historiquePlayer2,
+                HistoJoueur3 : historiquePlayer3,
+                HistoJoueur4 : historiquePlayer4,
+                Joueur1 : config.firstPlayer,
+                Joueur2 : config.secondPlayer,
+                Joueur3 : config.thirdPlayer,
+                Joueur4 : config.fourthPlayer,
+                Gagnant : config.secondPlayer
+            });
         }
         if (totalPlayer2 < 0) {
             alert(config.secondPlayer + " a un score trop élevé")
@@ -49,7 +69,17 @@ const GamePage = ({ config, handleEndGame }) => {
     const totalPlayer3 = typeDePartie - totPlayer3 ;
     useEffect(() => {
         if (totalPlayer3 === 0) {
-            handleEndGame();
+            handleEndGame({
+                HistoJoueur1 : historiquePlayer1,
+                HistoJoueur2 : historiquePlayer2,
+                HistoJoueur3 : historiquePlayer3,
+                HistoJoueur4 : historiquePlayer4,
+                Joueur1 : config.firstPlayer,
+                Joueur2 : config.secondPlayer,
+                Joueur3 : config.thirdPlayer,
+                Joueur4 : config.fourthPlayer,
+                Gagnant : config.thirdPlayer
+            });
         }
         if (totalPlayer3 < 0) {
             alert(config.thirdPlayer + " a un score trop élevé")
@@ -61,7 +91,17 @@ const GamePage = ({ config, handleEndGame }) => {
     const totalPlayer4 = typeDePartie - totPlayer4 ;
     useEffect(() => {
         if (totalPlayer4 === 0) {
-            handleEndGame();
+            handleEndGame({
+                HistoJoueur1 : historiquePlayer1,
+                HistoJoueur2 : historiquePlayer2,
+                HistoJoueur3 : historiquePlayer3,
+                HistoJoueur4 : historiquePlayer4,
+                Joueur1 : config.firstPlayer,
+                Joueur2 : config.secondPlayer,
+                Joueur3 : config.thirdPlayer,
+                Joueur4 : config.fourthPlayer,
+                Gagnant : config.fourthPlayer
+            });
         }
         if (totalPlayer4 < 0) {
             alert(config.fourthPlayer + " a un score trop élevé")
@@ -83,13 +123,6 @@ const GamePage = ({ config, handleEndGame }) => {
     const tableauHistorique2P4 = pointsPlayer4.length > 1 ? pointsPlayer4[pointsPlayer4.length - 2] : [];
     const tableauHistorique3P4 = pointsPlayer4.length > 2 ? pointsPlayer4[pointsPlayer4.length - 3] : [];
 
-    
-
-    // function suggestion() {
-    //     if ((gameMode - totPlayer1) < 170) {
-    //         totPlayer1
-    //     }
-    // }
 
     return <>
 
