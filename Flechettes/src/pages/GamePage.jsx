@@ -272,8 +272,8 @@ const GamePage = ({ config, handleEndGame }) => {
                     onClick={() => { tour.pop(); let newArray = [...tour]; setTour(newArray) }}>Annuler precedente flêche</button>
 
 
-                <p>{points}</p>
             </div>
+                <div name="points" >{points}</div>
             <div name="ligne8"
             >
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>

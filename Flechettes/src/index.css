@@ -4,6 +4,7 @@
 
 html, body, #root{
     height: 100%;
+   
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -395,4 +396,11 @@ code {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  body {
+    width: 100vw;
+    height: 50%;
+  }
 }
