@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CheckoutDouble from "./CheckoutDouble.json";
 import CheckoutSimple from "./CheckoutSimple.json";
 import ButtonCible from "./bouton";
-
+import "./GamePage.css"
 
 const GamePage = ({ config, handleEndGame }) => {
     const [cible, setCible] = useState(null)
@@ -102,32 +102,89 @@ const GamePage = ({ config, handleEndGame }) => {
 
     return <>
 
-        <div name="tableau">
+        <div name="tableau"
+            style={{
+                display: "grid",
+                width: "30vw",
+                height: "90vh",
+                gridTemplateRows: "1fr 2fr 2fr 2fr 5fr 1fr 1fr 2fr",
+                justifyContent: "center",
+                border: "solid black 1px"
+            }}>
             <div name="ligne1"
-                >{config.typeOfPart} Sortie {config.typeOfSort}</div>
+                style={{
+                    display: "flex",
+                    border: "solid red 1px",
+                    width: "30vw",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>{config.typeOfPart} Sortie {config.typeOfSort}</div>
             <div name="ligne2"
-                >
+                style={{ display: "flex" }}>
                 <div name="player1"
-                    >{config.firstPlayer}
+                    style={{
+                        border: "solid green 1px",
+                        width: `${100 / config.playerQuantity}%`,
+                        height: "100%",
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        display: "flex",
+                        flexDirection: "column"
+                    }}>{config.firstPlayer}
                     <p>{totalPlayer1}</p>
                 </div>
                 <div name="player2"
-                    >{config.secondPlayer}
+                    style={{
+                        border: "solid green 1px",
+                        width: `${100 / config.playerQuantity}%`,
+                        height: "100%",
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        display: "flex",
+                        flexDirection: "column"
+                    }}>{config.secondPlayer}
                     <p>{totalPlayer2}</p>
                 </div>
                 {config.playerQuantity >= 3 && (
                     <div name="player3"
-                        >{config.thirdPlayer}
+                        style={{
+                            border: "solid green 1px",
+                            width: `${100 / config.playerQuantity}%`,
+                            height: "100%",
+                            alignItems: "center",
+                            display: "flex",
+                            justifyContent: "center",
+
+                            flexDirection: "column"
+                        }}>{config.thirdPlayer}
                         <p>{totalPlayer3}</p>
                     </div>)}
                 {config.playerQuantity >= 4 && (
                     <div name="player4"
-                        >{config.fourthPlayer}
+                        style={{
+                            border: "solid green 1px",
+                            width: `${100 / config.playerQuantity}%`,
+                            height: "100%",
+                            alignItems: "center",
+                            display: "flex",
+                            justifyContent: "center",
+
+                            flexDirection: "column"
+                        }}>{config.fourthPlayer}
                         <p>{totalPlayer4}</p>
                     </div>)}
             </div>
             <div name="ligne3"
-                >Suggestions {(currentPlayer === 1 && typeSortie === "Double") ?
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    border: "solid red 1px",
+                    width: "30vw",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>Suggestions {(currentPlayer === 1 && typeSortie === "Double") ?
                     getCheckoutDouble(totalPlayer1) : (currentPlayer === 2 && typeSortie === "Double") ?
                         getCheckoutDouble(totalPlayer2) : (currentPlayer === 3 && typeSortie === "Double") ?
                             getCheckoutDouble(totalPlayer3) : (currentPlayer === 4 && typeSortie === "Double") ?
@@ -138,13 +195,31 @@ const GamePage = ({ config, handleEndGame }) => {
                                                 getCheckoutSimple(totalPlayer4) : "fini"}
             </div>
             <div name="ligne4"
-                >
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: 'repeat(4,1fr)',
+                    gridTemplateRows: '1fr',
+                    gap: '5px',
+                    width: '100%',
+                    justifyContent: 'center',
+                    justifyItems: "center",
+                    alignItems: "center"
+                }}>
                 {tour.map((num, index) => (
                     <div key={index}>{num}</div>))}
                 <div>Score tour {totTour}</div>
             </div>
             <div name="ligne5"
-                >
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(6,1fr)',
+                    gridTemplateRows: 'repeat(4,1fr)',
+                    gap: '5px',
+                    width: '100%',
+                    justifyContent: 'center',
+                    justifyItems: "center",
+                    alignItems: "center",
+                }}>
                 <ButtonCible chiffre={0} cible={cible} setCible={setCible} setCoef={setCoef} />
                 <ButtonCible chiffre={1} cible={cible} setCible={setCible} setCoef={setCoef} />
                 <ButtonCible chiffre={2} cible={cible} setCible={setCible} setCoef={setCoef} />
@@ -170,14 +245,27 @@ const GamePage = ({ config, handleEndGame }) => {
                 <ButtonCible chiffre={50} cible={cible} setCible={setCible} setCoef={setCoef} />
             </div>
             <div name="ligne6"
-                >
+                style={{
+                    display: "flex",
+                    border: "solid red 1px",
+                    width: "30vw",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px"
+                }}>
                 coéficient
                 <button style={{ backgroundColor: coef === 1 ? "green" : "red" }} onClick={() => { setCoef(1) }} disabled={cible === null}>Simple</button>
                 <button style={{ backgroundColor: coef === 2 ? "green" : "red" }} onClick={() => { setCoef(2) }} disabled={cible === null || cible === 25 || cible === 50}>Double</button>
                 <button style={{ backgroundColor: coef === 3 ? "green" : "red" }} onClick={() => { setCoef(3) }} disabled={cible === null || cible === 25 || cible === 50}>Triple</button>
             </div>
             <div name="ligne7"
-                >
+                style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    border: "solid red 1px",
+                    width: "30vw",
+                }}>
                 <button
                     disabled={tour.length >= 3 || cible === null}
                     onClick={() => {
@@ -236,7 +324,14 @@ const GamePage = ({ config, handleEndGame }) => {
                 <p>{points}</p>
             </div>
             <div name="ligne8"
-                >
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    border: "solid red 1px",
+                    width: "30vw",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>
                 {currentPlayer === 1 && (<>
                     <div>  {tableauHistorique1P1.join(" ")}</div>
