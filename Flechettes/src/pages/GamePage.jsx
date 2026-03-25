@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CheckoutDouble from "./CheckoutDouble.json";
 import CheckoutSimple from "./CheckoutSimple.json";
 import ButtonCible from "./bouton";
+import './GamePage.css';
 
 
 const GamePage = ({ config, handleEndGame }) => {
@@ -29,15 +30,15 @@ const GamePage = ({ config, handleEndGame }) => {
     useEffect(() => {
         if (totalPlayer1 === 0) {
             handleEndGame({
-                HistoJoueur1 : historiquePlayer1,
-                HistoJoueur2 : historiquePlayer2,
-                HistoJoueur3 : historiquePlayer3,
-                HistoJoueur4 : historiquePlayer4,
-                Joueur1 : config.firstPlayer,
-                Joueur2 : config.secondPlayer,
-                Joueur3 : config.thirdPlayer,
-                Joueur4 : config.fourthPlayer,
-                Gagnant : config.firstPlayer
+                HistoJoueur1: historiquePlayer1,
+                HistoJoueur2: historiquePlayer2,
+                HistoJoueur3: historiquePlayer3,
+                HistoJoueur4: historiquePlayer4,
+                Joueur1: config.firstPlayer,
+                Joueur2: config.secondPlayer,
+                Joueur3: config.thirdPlayer,
+                Joueur4: config.fourthPlayer,
+                Gagnant: config.firstPlayer
             });
         }
         if (totalPlayer1 < 0) {
@@ -51,15 +52,15 @@ const GamePage = ({ config, handleEndGame }) => {
     useEffect(() => {
         if (totalPlayer2 === 0) {
             handleEndGame({
-                HistoJoueur1 : historiquePlayer1,
-                HistoJoueur2 : historiquePlayer2,
-                HistoJoueur3 : historiquePlayer3,
-                HistoJoueur4 : historiquePlayer4,
-                Joueur1 : config.firstPlayer,
-                Joueur2 : config.secondPlayer,
-                Joueur3 : config.thirdPlayer,
-                Joueur4 : config.fourthPlayer,
-                Gagnant : config.secondPlayer
+                HistoJoueur1: historiquePlayer1,
+                HistoJoueur2: historiquePlayer2,
+                HistoJoueur3: historiquePlayer3,
+                HistoJoueur4: historiquePlayer4,
+                Joueur1: config.firstPlayer,
+                Joueur2: config.secondPlayer,
+                Joueur3: config.thirdPlayer,
+                Joueur4: config.fourthPlayer,
+                Gagnant: config.secondPlayer
             });
         }
         if (totalPlayer2 < 0) {
@@ -73,15 +74,15 @@ const GamePage = ({ config, handleEndGame }) => {
     useEffect(() => {
         if (totalPlayer3 === 0) {
             handleEndGame({
-                HistoJoueur1 : historiquePlayer1,
-                HistoJoueur2 : historiquePlayer2,
-                HistoJoueur3 : historiquePlayer3,
-                HistoJoueur4 : historiquePlayer4,
-                Joueur1 : config.firstPlayer,
-                Joueur2 : config.secondPlayer,
-                Joueur3 : config.thirdPlayer,
-                Joueur4 : config.fourthPlayer,
-                Gagnant : config.thirdPlayer
+                HistoJoueur1: historiquePlayer1,
+                HistoJoueur2: historiquePlayer2,
+                HistoJoueur3: historiquePlayer3,
+                HistoJoueur4: historiquePlayer4,
+                Joueur1: config.firstPlayer,
+                Joueur2: config.secondPlayer,
+                Joueur3: config.thirdPlayer,
+                Joueur4: config.fourthPlayer,
+                Gagnant: config.thirdPlayer
             });
         }
         if (totalPlayer3 < 0) {
@@ -95,15 +96,15 @@ const GamePage = ({ config, handleEndGame }) => {
     useEffect(() => {
         if (totalPlayer4 === 0) {
             handleEndGame({
-                HistoJoueur1 : historiquePlayer1,
-                HistoJoueur2 : historiquePlayer2,
-                HistoJoueur3 : historiquePlayer3,
-                HistoJoueur4 : historiquePlayer4,
-                Joueur1 : config.firstPlayer,
-                Joueur2 : config.secondPlayer,
-                Joueur3 : config.thirdPlayer,
-                Joueur4 : config.fourthPlayer,
-                Gagnant : config.fourthPlayer
+                HistoJoueur1: historiquePlayer1,
+                HistoJoueur2: historiquePlayer2,
+                HistoJoueur3: historiquePlayer3,
+                HistoJoueur4: historiquePlayer4,
+                Joueur1: config.firstPlayer,
+                Joueur2: config.secondPlayer,
+                Joueur3: config.thirdPlayer,
+                Joueur4: config.fourthPlayer,
+                Gagnant: config.fourthPlayer
             });
         }
         if (totalPlayer4 < 0) {
@@ -133,52 +134,57 @@ const GamePage = ({ config, handleEndGame }) => {
     };
 
 
-
     return <>
 
         <div name="tableau">
             <div name="ligne1"
-                >{config.typeOfPart} Sortie {config.typeOfSort}</div>
+            >{config.typeOfPart} Sortie {config.typeOfSort}</div>
             <div name="ligne2"
-                >
-                <div name="player1"
-                    >{config.firstPlayer}
+            >
+                <div name="player1" data-current={currentPlayer === 1 ? "true" : "false"}
+                >{config.firstPlayer}
                     <p>{totalPlayer1}</p>
                 </div>
-                <div name="player2"
-                    >{config.secondPlayer}
+                <div name="player2" data-current={currentPlayer === 2 ? "true" : "false"}
+                >{config.secondPlayer}
                     <p>{totalPlayer2}</p>
                 </div>
                 {config.playerQuantity >= 3 && (
-                    <div name="player3"
-                        >{config.thirdPlayer}
+                    <div name="player3" data-current={currentPlayer === 3 ? "true" : "false"}
+                    >{config.thirdPlayer}
                         <p>{totalPlayer3}</p>
                     </div>)}
                 {config.playerQuantity >= 4 && (
-                    <div name="player4"
-                        >{config.fourthPlayer}
+                    <div name="player4" data-current={currentPlayer === 4 ? "true" : "false"}
+                    >{config.fourthPlayer}
                         <p>{totalPlayer4}</p>
                     </div>)}
             </div>
-            <div name="ligne3"
-                >Suggestions {(currentPlayer === 1 && typeSortie === "Double") ?
-                    getCheckoutDouble(totalPlayer1) : (currentPlayer === 2 && typeSortie === "Double") ?
-                        getCheckoutDouble(totalPlayer2) : (currentPlayer === 3 && typeSortie === "Double") ?
-                            getCheckoutDouble(totalPlayer3) : (currentPlayer === 4 && typeSortie === "Double") ?
-                                getCheckoutDouble(totalPlayer4) : (currentPlayer === 1 && typeSortie === "simple") ?
-                                    getCheckoutSimple(totalPlayer1) : (currentPlayer === 2 && typeSortie === "simple") ?
-                                        getCheckoutSimple(totalPlayer2) : (currentPlayer === 3 && typeSortie === "simple") ?
-                                            getCheckoutSimple(totalPlayer3) : (currentPlayer === 4 && typeSortie === "simple") ?
-                                                getCheckoutSimple(totalPlayer4) : "fini"}
+            <div name="ligne3">Suggestions {(currentPlayer === 1 && typeSortie === "Double") ?
+                getCheckoutDouble(totalPlayer1) :
+                (currentPlayer === 2 && typeSortie === "Double") ?
+                    getCheckoutDouble(totalPlayer2) :
+                    (currentPlayer === 3 && typeSortie === "Double") ?
+                        getCheckoutDouble(totalPlayer3) :
+                        (currentPlayer === 4 && typeSortie === "Double") ?
+                            getCheckoutDouble(totalPlayer4) :
+                            (currentPlayer === 1 && typeSortie === "simple") ?
+                                getCheckoutSimple(totalPlayer1) :
+                                (currentPlayer === 2 && typeSortie === "simple") ?
+                                    getCheckoutSimple(totalPlayer2) :
+                                    (currentPlayer === 3 && typeSortie === "simple") ?
+                                        getCheckoutSimple(totalPlayer3) :
+                                        (currentPlayer === 4 && typeSortie === "simple") ?
+                                            getCheckoutSimple(totalPlayer4) : "fini"}
             </div>
             <div name="ligne4"
-                >
+            >
                 {tour.map((num, index) => (
                     <div key={index}>{num}</div>))}
                 <div>Score tour {totTour}</div>
             </div>
             <div name="ligne5"
-                >
+            >
                 <ButtonCible chiffre={0} cible={cible} setCible={setCible} setCoef={setCoef} />
                 <ButtonCible chiffre={1} cible={cible} setCible={setCible} setCoef={setCoef} />
                 <ButtonCible chiffre={2} cible={cible} setCible={setCible} setCoef={setCoef} />
@@ -204,14 +210,13 @@ const GamePage = ({ config, handleEndGame }) => {
                 <ButtonCible chiffre={50} cible={cible} setCible={setCible} setCoef={setCoef} />
             </div>
             <div name="ligne6"
-                >
-                coéficient
+            >
                 <button style={{ backgroundColor: coef === 1 ? "green" : "red" }} onClick={() => { setCoef(1) }} disabled={cible === null}>Simple</button>
                 <button style={{ backgroundColor: coef === 2 ? "green" : "red" }} onClick={() => { setCoef(2) }} disabled={cible === null || cible === 25 || cible === 50}>Double</button>
                 <button style={{ backgroundColor: coef === 3 ? "green" : "red" }} onClick={() => { setCoef(3) }} disabled={cible === null || cible === 25 || cible === 50}>Triple</button>
             </div>
             <div name="ligne7"
-                >
+            >
                 <button
                     disabled={tour.length >= 3 || cible === null}
                     onClick={() => {
@@ -270,7 +275,7 @@ const GamePage = ({ config, handleEndGame }) => {
                 <p>{points}</p>
             </div>
             <div name="ligne8"
-                >
+            >
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>
                 {currentPlayer === 1 && (<>
                     <div>  {tableauHistorique1P1.join(" ")}</div>
