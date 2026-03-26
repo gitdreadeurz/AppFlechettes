@@ -27,6 +27,7 @@ const GamePage = ({ config, handleEndGame }) => {
     const typeDePartie = config.typeOfPart
     const typeSortie = config.typeOfSort
     const totalPlayer1 = typeDePartie - totPlayer1;
+
     useEffect(() => {
         if (totalPlayer1 === 0) {
             handleEndGame({
@@ -48,6 +49,7 @@ const GamePage = ({ config, handleEndGame }) => {
             setCible(0)
         }
     }, [totalPlayer1])
+
     const totalPlayer2 = typeDePartie - totPlayer2;
     useEffect(() => {
         if (totalPlayer2 === 0) {
@@ -70,6 +72,7 @@ const GamePage = ({ config, handleEndGame }) => {
             setCible(0)
         }
     }, [totalPlayer2])
+
     const totalPlayer3 = typeDePartie - totPlayer3;
     useEffect(() => {
         if (totalPlayer3 === 0) {
@@ -92,6 +95,7 @@ const GamePage = ({ config, handleEndGame }) => {
             setCible(0)
         }
     }, [totalPlayer3])
+
     const totalPlayer4 = typeDePartie - totPlayer4;
     useEffect(() => {
         if (totalPlayer4 === 0) {
@@ -114,6 +118,7 @@ const GamePage = ({ config, handleEndGame }) => {
             setCible(0)
         }
     }, [totalPlayer4])
+
     const tableauHistorique1P1 = pointsPlayer1.length > 0 ? pointsPlayer1[pointsPlayer1.length - 1] : [];
     const tableauHistorique2P1 = pointsPlayer1.length > 1 ? pointsPlayer1[pointsPlayer1.length - 2] : [];
     const tableauHistorique3P1 = pointsPlayer1.length > 2 ? pointsPlayer1[pointsPlayer1.length - 3] : [];
@@ -126,12 +131,21 @@ const GamePage = ({ config, handleEndGame }) => {
     const tableauHistorique1P4 = pointsPlayer4.length > 0 ? pointsPlayer4[pointsPlayer4.length - 1] : [];
     const tableauHistorique2P4 = pointsPlayer4.length > 1 ? pointsPlayer4[pointsPlayer4.length - 2] : [];
     const tableauHistorique3P4 = pointsPlayer4.length > 2 ? pointsPlayer4[pointsPlayer4.length - 3] : [];
+
     const getCheckoutDouble = (score) => {
         return CheckoutDouble[score] || null;
     };
+
     const getCheckoutSimple = (score) => {
         return CheckoutSimple[score] || null;
     };
+
+    
+    const remainingCurrentPlayer =
+        currentPlayer === 1 ? totalPlayer1 - totTour :
+            currentPlayer === 2 ? totalPlayer2 - totTour :
+                currentPlayer === 3 ? totalPlayer3 - totTour :
+                    currentPlayer === 4 ? totalPlayer4 - totTour : 0;
 
 
     return <>
@@ -224,7 +238,7 @@ const GamePage = ({ config, handleEndGame }) => {
                         setCible(null)
                     }}>Valider la flèche</button>
                 <button
-                    disabled={tour.length < 3}
+                    disabled={tour.length < 3 && remainingCurrentPlayer !== 0}
                     onClick={() => {
                         if (currentPlayer === 1) {
                             setHistoriquePlayer1([...historiquePlayer1, totTour])
@@ -273,7 +287,7 @@ const GamePage = ({ config, handleEndGame }) => {
 
 
             </div>
-                <div name="points" >{points}</div>
+            <div name="points" >{points}</div>
             <div name="ligne8"
             >
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>
