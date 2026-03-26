@@ -8,6 +8,7 @@ import './GamePage.css';
 const GamePage = ({ config, handleEndGame }) => {
     const [cible, setCible] = useState(null)
     const [coef, setCoef] = useState(1)
+    const [histoCoef, setHistoCoef] = useState([])
     const points = coef * cible
     const [tour, setTour] = useState([])
     const [historiquePlayer1, setHistoriquePlayer1] = useState([])
@@ -47,7 +48,7 @@ const GamePage = ({ config, handleEndGame }) => {
             setTour([])
             setCible(0)
         }
-    }, [totalPlayer1])
+    }, [totalPlayer1, coef])
     const totalPlayer2 = typeDePartie - totPlayer2;
     useEffect(() => {
         if (totalPlayer2 === 0) {
@@ -132,6 +133,10 @@ const GamePage = ({ config, handleEndGame }) => {
     const getCheckoutSimple = (score) => {
         return CheckoutSimple[score] || null;
     };
+    const totalCurrentPlayer = currentPlayer === 1 ? totalPlayer1 :
+        currentPlayer === 2 ? totalPlayer2 :
+            currentPlayer === 3 ? totalPlayer3 :
+                totalPlayer4;
 
 
     return <>
@@ -222,21 +227,58 @@ const GamePage = ({ config, handleEndGame }) => {
                     onClick={() => {
                         setTour([...tour, points])
                         setCible(null)
+                        if ((totalCurrentPlayer - points === 0 && config.typeOfSort === "Double" && coef != 2)) {
+                            alert("Vous devez terminer avec un double!")
+                            setTour([])
+                            setCible(0)
+                            if (config.playerQuantity == currentPlayer) {
+                                setCurrentPlayer(1)
+                            } else {
+                                setCurrentPlayer(currentPlayer + 1)
+                            }
+                            return
+                        }
+                        if (currentPlayer === 1) {
+                            setHistoriquePlayer1([...historiquePlayer1, points])
+                        }
+                        if (currentPlayer === 2) {
+                            setHistoriquePlayer2([...historiquePlayer2, points])
+                        }
+                        if (currentPlayer === 3) {
+                            setHistoriquePlayer3([...historiquePlayer3, points])
+                        }
+                        if (currentPlayer === 4) {
+                            setHistoriquePlayer4([...historiquePlayer4, points])
+                        }
+                        console.log(histoCoef); 
                     }}>Valider la flèche</button>
                 <button
                     disabled={tour.length < 3}
                     onClick={() => {
+                        // if ((totalCurrentPlayer - totTour === 0 && config.typeOfSort === "Double" && histoCoef.slice(-1)[0] != 2)) {
+                        //     alert("Vous devez terminer avec un double!")
+                        //     setTour([])
+                        //     setCible(0)
+                        //     if (config.playerQuantity == currentPlayer) {
+                        //         setCurrentPlayer(1)
+                        //     } else {
+                        //         setCurrentPlayer(currentPlayer + 1)
+                        //     }
+                        //     return
+                        // }
                         if (currentPlayer === 1) {
-                            setHistoriquePlayer1([...historiquePlayer1, totTour])
+                            // setHistoriquePlayer1([...historiquePlayer1, totTour])
                             setPointsPlayer1([...pointsPlayer1, [tour]])
                             setTour([])
+                            setHistoCoef([])
                             setCible(0)
                             setCurrentPlayer(currentPlayer + 1)
                         }
                         if (currentPlayer === 2) {
-                            setHistoriquePlayer2([...historiquePlayer2, totTour])
+                            // setHistoriquePlayer2([...historiquePlayer2, totTour])
                             setPointsPlayer2([...pointsPlayer2, [tour]])
                             setTour([])
+                            setHistoCoef([])
                             setCible(0)
                             if (config.playerQuantity === "2") {
                                 setCurrentPlayer(1)
@@ -245,9 +287,10 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 3) {
-                            setHistoriquePlayer3([...historiquePlayer3, totTour])
+                            // setHistoriquePlayer3([...historiquePlayer3, totTour])
                             setPointsPlayer3([...pointsPlayer3, [tour]])
                             setTour([])
+                            setHistoCoef([])
                             setCible(0)
                             if (config.playerQuantity === "3") {
                                 setCurrentPlayer(1)
@@ -256,9 +299,10 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 4) {
-                            setHistoriquePlayer4([...historiquePlayer4, totTour])
+                            // setHistoriquePlayer4([...historiquePlayer4, totTour])
                             setPointsPlayer4([...pointsPlayer4, [tour]])
                             setTour([])
+                            setHistoCoef([])
                             setCible(0)
                             if (config.playerQuantity === "4") {
                                 setCurrentPlayer(1)
@@ -273,7 +317,7 @@ const GamePage = ({ config, handleEndGame }) => {
 
 
             </div>
-                <div name="points" >{points}</div>
+            <div name="points" >{points}</div>
             <div name="ligne8"
             >
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>
