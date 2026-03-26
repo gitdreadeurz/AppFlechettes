@@ -225,14 +225,9 @@ const GamePage = ({ config, handleEndGame }) => {
                 <button
                     disabled={tour.length >= 3 || cible === null}
                     onClick={() => {
-                        setHistoCoef([...histoCoef, coef])
                         setTour([...tour, points])
                         setCible(null)
-                    }}>Valider la flèche</button>
-                <button
-                    disabled={tour.length < 3}
-                    onClick={() => {
-                        if ((totalCurrentPlayer - totTour === 0 && config.typeOfSort === "Double" && histoCoef.slice(-1)[0] != 2)) {
+                        if ((totalCurrentPlayer - points === 0 && config.typeOfSort === "Double" && coef != 2)) {
                             alert("Vous devez terminer avec un double!")
                             setTour([])
                             setCible(0)
@@ -244,7 +239,35 @@ const GamePage = ({ config, handleEndGame }) => {
                             return
                         }
                         if (currentPlayer === 1) {
-                            setHistoriquePlayer1([...historiquePlayer1, totTour])
+                            setHistoriquePlayer1([...historiquePlayer1, points])
+                        }
+                        if (currentPlayer === 2) {
+                            setHistoriquePlayer2([...historiquePlayer2, points])
+                        }
+                        if (currentPlayer === 3) {
+                            setHistoriquePlayer3([...historiquePlayer3, points])
+                        }
+                        if (currentPlayer === 4) {
+                            setHistoriquePlayer4([...historiquePlayer4, points])
+                        }
+                        console.log(histoCoef); 
+                    }}>Valider la flèche</button>
+                <button
+                    disabled={tour.length < 3}
+                    onClick={() => {
+                        // if ((totalCurrentPlayer - totTour === 0 && config.typeOfSort === "Double" && histoCoef.slice(-1)[0] != 2)) {
+                        //     alert("Vous devez terminer avec un double!")
+                        //     setTour([])
+                        //     setCible(0)
+                        //     if (config.playerQuantity == currentPlayer) {
+                        //         setCurrentPlayer(1)
+                        //     } else {
+                        //         setCurrentPlayer(currentPlayer + 1)
+                        //     }
+                        //     return
+                        // }
+                        if (currentPlayer === 1) {
+                            // setHistoriquePlayer1([...historiquePlayer1, totTour])
                             setPointsPlayer1([...pointsPlayer1, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -252,7 +275,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             setCurrentPlayer(currentPlayer + 1)
                         }
                         if (currentPlayer === 2) {
-                            setHistoriquePlayer2([...historiquePlayer2, totTour])
+                            // setHistoriquePlayer2([...historiquePlayer2, totTour])
                             setPointsPlayer2([...pointsPlayer2, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -264,7 +287,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 3) {
-                            setHistoriquePlayer3([...historiquePlayer3, totTour])
+                            // setHistoriquePlayer3([...historiquePlayer3, totTour])
                             setPointsPlayer3([...pointsPlayer3, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -276,7 +299,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 4) {
-                            setHistoriquePlayer4([...historiquePlayer4, totTour])
+                            // setHistoriquePlayer4([...historiquePlayer4, totTour])
                             setPointsPlayer4([...pointsPlayer4, [tour]])
                             setTour([])
                             setHistoCoef([])
