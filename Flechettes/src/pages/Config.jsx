@@ -74,7 +74,7 @@ const Config = ({ setGameConfig }) => {
                     </h2>
 
                     {/* Sélecteur du nombre de joueurs (2 à 4) */}
-                    <label htmlFor="playerQuantity">
+                    <label style={{color : "black"}} htmlFor="playerQuantity">
                         Nombre de joueurs
                         <select
                             name="playerQuantity"
@@ -132,7 +132,7 @@ const Config = ({ setGameConfig }) => {
                     </div>
 
                     {/* Sélecteur du type de partie : score de départ (301, 501, 701) */}
-                    <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <label style={{ color :"black",marginBottom: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de partie
                         <select name="typeOfPart" style={{ padding: "8px", borderRadius: "4px" }}>
                             <option value={301}>301</option>
@@ -142,7 +142,7 @@ const Config = ({ setGameConfig }) => {
                     </label>
 
                     {/* Sélecteur du type de sortie : simple ou double */}
-                    <label style={{ marginBottom: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <label style={{ color :"black",marginBottom: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
                         Type de sortie
                         <select
                             name="typeOfSort"

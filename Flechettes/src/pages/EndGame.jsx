@@ -14,6 +14,8 @@ const EndGame = ({ resultat, onReplay, onNewGame }) => {
   ].filter((j) => j.nom && j.nom.trim() !== "");
 
   const calcStats = (histo) => {
+    console.log(histo);
+    
     const total = histo.reduce((acc, val) => acc + val, 0);
     const tours = histo.length;
     const moyenne = tours > 0 ? (total / tours).toFixed(1) : 0;
