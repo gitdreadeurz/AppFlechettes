@@ -15,10 +15,6 @@ const GamePage = ({ config, handleEndGame }) => {
     const [historiquePlayer2, setHistoriquePlayer2] = useState([])
     const [historiquePlayer3, setHistoriquePlayer3] = useState([])
     const [historiquePlayer4, setHistoriquePlayer4] = useState([])
-    const [histoTourP1, setHistoTourP1] = useState([])
-    const [histoTourP2, setHistoTourP2] = useState([])
-    const [histoTourP3, setHistoTourP3] = useState([])
-    const [histoTourP4, setHistoTourP4] = useState([])
     const [pointsPlayer1, setPointsPlayer1] = useState([])
     const [pointsPlayer2, setPointsPlayer2] = useState([])
     const [pointsPlayer3, setPointsPlayer3] = useState([])
@@ -34,9 +30,8 @@ const GamePage = ({ config, handleEndGame }) => {
     const totalPlayer1 = typeDePartie - totPlayer1;
     useEffect(() => {
         if (totalPlayer1 === 0) {
-            setHistoTourP1([...histoTourP1,tour])
             handleEndGame({
-                HistoJoueur1: [...histoTourP1,totTour],
+                HistoJoueur1: historiquePlayer1,
                 HistoJoueur2: historiquePlayer2,
                 HistoJoueur3: historiquePlayer3,
                 HistoJoueur4: historiquePlayer4,
@@ -272,7 +267,7 @@ const GamePage = ({ config, handleEndGame }) => {
                         //     return
                         // }
                         if (currentPlayer === 1) {
-                            setHistoTourP1([...histoTourP1, totTour])
+                            // setHistoriquePlayer1([...historiquePlayer1, totTour])
                             setPointsPlayer1([...pointsPlayer1, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -280,7 +275,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             setCurrentPlayer(currentPlayer + 1)
                         }
                         if (currentPlayer === 2) {
-                            setHistoTourP2([...histoTourP2, totTour])
+                            // setHistoriquePlayer2([...historiquePlayer2, totTour])
                             setPointsPlayer2([...pointsPlayer2, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -292,7 +287,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 3) {
-                            setHistoTourP3([...histoTourP3, totTour])
+                            // setHistoriquePlayer3([...historiquePlayer3, totTour])
                             setPointsPlayer3([...pointsPlayer3, [tour]])
                             setTour([])
                             setHistoCoef([])
@@ -304,7 +299,7 @@ const GamePage = ({ config, handleEndGame }) => {
                             }
                         }
                         if (currentPlayer === 4) {
-                            setHistoTourP4([...histoTourP4, totTour])
+                            // setHistoriquePlayer4([...historiquePlayer4, totTour])
                             setPointsPlayer4([...pointsPlayer4, [tour]])
                             setTour([])
                             setHistoCoef([])
