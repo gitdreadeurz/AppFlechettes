@@ -36,7 +36,7 @@ const GamePage = ({ config, handleEndGame }) => {
         if (totalPlayer1 === 0) {
             setHistoTourP1([...histoTourP1,tour])
             handleEndGame({
-                HistoJoueur1: [...histoTourP1,totTour],
+                HistoJoueur1: [...histoTourP1,totTour], 
                 HistoJoueur2: historiquePlayer2,
                 HistoJoueur3: historiquePlayer3,
                 HistoJoueur4: historiquePlayer4,
@@ -327,27 +327,27 @@ const GamePage = ({ config, handleEndGame }) => {
             >
                 <div>Historique {currentPlayer === 1 ? config.firstPlayer : currentPlayer === 2 ? config.secondPlayer : currentPlayer === 3 ? config.thirdPlayer : currentPlayer === 4 ? config.fourthPlayer : ""}</div>
                 {currentPlayer === 1 && (<>
-                    <div>  {tableauHistorique1P1.join(" ")}</div>
-                    <div>  {tableauHistorique2P1.join(" ")}</div>
-                    <div>  {tableauHistorique3P1.join(" ")}</div>
+                    <div>  {tableauHistorique1P1.join(" - ")}</div>
+                    <div>  {tableauHistorique2P1.join(" - ")}</div>
+                    <div>  {tableauHistorique3P1.join(" - ")}</div>
                 </>
                 )}
                 {currentPlayer === 2 && (<>
-                    <div>  {tableauHistorique1P2.join(" ")}</div>
-                    <div>  {tableauHistorique2P2.join(" ")}</div>
-                    <div>  {tableauHistorique3P2.join(" ")}</div>
+                    <div>  {tableauHistorique1P2.join(" - ")}</div>
+                    <div>  {tableauHistorique2P2.join(" - ")}</div>
+                    <div>  {tableauHistorique3P2.join(" - ")}</div>
                 </>
                 )}
                 {currentPlayer === 3 && (<>
-                    <div>  {tableauHistorique1P3.join(" ")}</div>
-                    <div>  {tableauHistorique2P3.join(" ")}</div>
-                    <div>  {tableauHistorique3P3.join(" ")}</div>
+                    <div>  {tableauHistorique1P3.join(" - ")}</div>
+                    <div>  {tableauHistorique2P3.join(" - ")}</div>
+                    <div>  {tableauHistorique3P3.join(" - ")}</div>
                 </>
                 )}
                 {currentPlayer === 4 && (<>
-                    <div>  {tableauHistorique1P4.join(" ")}</div>
-                    <div>  {tableauHistorique2P4.join(" ")}</div>
-                    <div>  {tableauHistorique3P4.join(" ")}</div>
+                    <div>  {tableauHistorique1P4.join(" - ")}</div>
+                    <div>  {tableauHistorique2P4.join(" - ")}</div>
+                    <div>  {tableauHistorique3P4.join(" - ")}</div>
                 </>
                 )}
             </div>
